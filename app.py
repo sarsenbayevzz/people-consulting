@@ -43,7 +43,7 @@ st.markdown("""
         font-family: 'DM Sans', sans-serif;
         background-color: var(--bg);
         color: var(--text);
-        zoom: 0.85;
+        zoom: 0.90;
     }
 
     /* Sidebar */

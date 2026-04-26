@@ -720,7 +720,7 @@ if page == "Главная":
             update_layout_with_defaults(fig,
                 height=360,
                 yaxis=dict(autorange="reversed", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=16)),
-                xaxis=dict(title="Want %", gridcolor=COLOR_BORDER, range=[0,1], titlefont=dict(color=COLOR_TEXT, size=PLOT_AXIS_TITLE_SIZE)),
+                xaxis=dict(title="Want %", gridcolor=COLOR_BORDER, range=[0,1], title_font=dict(color=COLOR_TEXT, size=PLOT_AXIS_TITLE_SIZE)),
                 bargap=0.2,
                 showlegend=False,
             )
@@ -746,7 +746,7 @@ if page == "Главная":
             update_layout_with_defaults(fig,
                 height=360,
                 yaxis=dict(autorange="reversed", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=16)),
-                xaxis=dict(title="Not Want %", gridcolor=COLOR_BORDER, range=[0,1], titlefont=dict(color=COLOR_TEXT, size=PLOT_AXIS_TITLE_SIZE)),
+                xaxis=dict(title="Not Want %", gridcolor=COLOR_BORDER, range=[0,1], title_font=dict(color=COLOR_TEXT, size=PLOT_AXIS_TITLE_SIZE)),
                 bargap=0.2,
                 showlegend=False,
             )

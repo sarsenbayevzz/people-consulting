@@ -61,45 +61,45 @@ st.markdown("""
         color: var(--text) !important;
         letter-spacing: -0.02em;
     }
-    h1 { font-size: 3rem !important; font-weight: 800 !important; }
-    h2 { font-size: 30px !important; font-weight: 700 !important; }
-    h3 { font-size: 30px !important; font-weight: 600 !important; }
+    h1 { font-size: 2.8rem !important; font-weight: 800 !important; }
+    h2 { font-size: 28px !important; font-weight: 700 !important; }
+    h3 { font-size: 28px !important; font-weight: 600 !important; }
 
     /* Metric cards */
     [data-testid="metric-container"] {
         background: var(--surface) !important;
         border: 1px solid var(--border) !important;
-        border-radius: 12px !important;
-        padding: 16px 20px !important;
+        border-radius: 6px !important;
+        padding: 12px 16px !important;
     }
     [data-testid="stMetricValue"] {
         font-family: 'DM Sans', sans-serif !important;
-        font-size: 3rem !important;
+        font-size: 2.8rem !important;
         font-weight: 700 !important;
         color: var(--text) !important;
     }
     [data-testid="stMetricLabel"] {
-        font-size: 2rem !important;
+        font-size: 1.8rem !important;
         color: var(--text) !important;
         text-transform: uppercase;
         letter-spacing: 0.08em;
     }
     [data-testid="stMetricDelta"] {
-        font-size: 0.85rem !important;
+        font-size: 0.75rem !important;
     }
 
     /* Tabs */
     [data-testid="stTabs"] [role="tab"] {
         font-family: 'DM Sans', sans-serif;
         font-weight: 700;
-        font-size: 1.08rem;
+        font-size: 0.98rem;
         color: var(--muted) !important;
-        border-radius: 8px 8px 0 0 !important;
-        min-height: 48px;
-        padding: 12px 18px !important;
+        border-radius: 6px 6px 0 0 !important;
+        min-height: 46px;
+        padding: 10px 16px !important;
     }
     [data-testid="stTabs"] [role="tab"] p {
-        font-size: 1.08rem !important;
+        font-size: 0.98rem !important;
         line-height: 1.2 !important;
     }
     [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
@@ -111,50 +111,50 @@ st.markdown("""
     [data-baseweb="select"] {
         background: var(--surface2) !important;
         border-color: var(--border) !important;
-        border-radius: 8px !important;
+        border-radius: 6px !important;
     }
 
     /* Radio nav */
     [data-testid="stRadio"] label {
         font-family: 'DM Sans', sans-serif;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     /* Divider */
     hr {
         border-color: var(--border) !important;
-        margin: 1.5rem 0 !important;
+        margin: 1.3rem 0 !important;
     }
 
     /* Section cards */
     .section-card {
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 20px 24px;
-        margin-bottom: 16px;
+        border-radius: 14px;
+        padding: 18px 22px;
+        margin-bottom: 14px;
     }
 
     /* Page title bar */
     .page-title {
-        padding: 8px 0 24px 0;
+        padding: 6px 0 22px 0;
         border-bottom: 1px solid var(--border);
-        margin-bottom: 28px;
+        margin-bottom: 26px;
     }
     .page-title h1 { margin: 0 !important; }
     .page-subtitle {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         color: var(--muted);
-        margin-top: 4px;
+        margin-top: 2px;
         font-family: 'DM Sans', sans-serif;
     }
 
     /* Badge */
     .badge {
         display: inline-block;
-        padding: 2px 10px;
-        border-radius: 20px;
-        font-size: 0.72rem;
+        padding: 1px 8px;
+        border-radius: 18px;
+        font-size: 0.62rem;
         font-weight: 600;
         font-family: 'Syne', sans-serif;
         text-transform: uppercase;
@@ -188,19 +188,19 @@ COLOR_TEXT = "#E8EAF0"
 COLOR_MAN = "#3498DB"
 COLOR_WOMAN = "#E91E63"
 COLOR_MUTED = "#6B7280"
-PLOT_FONT_SIZE = 15
-PLOT_TITLE_SIZE = 25
-PLOT_LEGEND_SIZE = 20
-PLOT_TICK_SIZE = 16
-PLOT_TEXT_SIZE = 20
-PLOT_AXIS_TITLE_SIZE = 20
+PLOT_FONT_SIZE = 13
+PLOT_TITLE_SIZE = 23
+PLOT_LEGEND_SIZE = 18
+PLOT_TICK_SIZE = 14
+PLOT_TEXT_SIZE = 18
+PLOT_AXIS_TITLE_SIZE = 18
 
 
 PLOTLY_LAYOUT = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     font=dict(family="DM Sans", color=COLOR_TEXT, size=PLOT_FONT_SIZE),
-    margin=dict(l=10, r=10, t=36, b=10),
+    margin=dict(l=8, r=8, t=34, b=8),
     legend=dict(
         bgcolor="rgba(0,0,0,0)",
         font=dict(color=COLOR_TEXT, size=PLOT_LEGEND_SIZE)
@@ -225,7 +225,7 @@ def update_layout_with_defaults(fig, **kwargs):
     fig.update_layout(**layout)
     return fig
 
-def apply_layout(fig, title="", height=360):
+def apply_layout(fig, title="", height=358):
     update_layout_with_defaults(fig,
         height=height,
     )
@@ -320,7 +320,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown(
-        "<div style='font-size:0.7rem;color:#6B7280;text-align:center;'>"
+        "<div style='font-size:0.6rem;color:#6B7280;text-align:center;'>"
         "People Consulting © 2026<br>Employer Intelligence Platform"
         "</div>",
         unsafe_allow_html=True
@@ -360,7 +360,7 @@ filter_label = f"Фильтр активен · {len(filtered_r)} / {len(r)} р�
 # REUSABLE CHART BUILDERS
 # =========================================================
 
-def bar_chart_horizontal(df, x_col, y_col, color=COLOR_ACCENT, title="", height=360, text_col=None):
+def bar_chart_horizontal(df, x_col, y_col, color=COLOR_ACCENT, title="", height=358, text_col=None):
     df = df.copy()
     fig = go.Figure()
     text = df[text_col] if text_col and text_col in df.columns else None
@@ -384,7 +384,7 @@ def bar_chart_horizontal(df, x_col, y_col, color=COLOR_ACCENT, title="", height=
     return fig
 
 
-def bar_chart_vertical(df, x_col, y_col, color=COLOR_ACCENT, title="", height=320, text_template=None):
+def bar_chart_vertical(df, x_col, y_col, color=COLOR_ACCENT, title="", height=318, text_template=None):
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=df[x_col],
@@ -404,7 +404,7 @@ def bar_chart_vertical(df, x_col, y_col, color=COLOR_ACCENT, title="", height=32
     return fig
 
 
-def donut_chart(labels, values, colors, title="", height=320):
+def donut_chart(labels, values, colors, title="", height=318):
     fig = go.Figure(go.Pie(
         labels=labels,
         values=values,
@@ -420,13 +420,13 @@ def donut_chart(labels, values, colors, title="", height=320):
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="DM Sans", color=COLOR_TEXT),
         height=height,
-        margin=dict(l=40, r=40, t=36, b=54),
+        margin=dict(l=38, r=38, t=34, b=52),
         legend=dict(bgcolor="rgba(0,0,0,0)", font=dict(color=COLOR_TEXT, size=PLOT_LEGEND_SIZE))
     )
     return fig
 
 
-def scatter_chart(df, x_col, y_col, label_col=None, color=COLOR_ACCENT, title="", height=400,
+def scatter_chart(df, x_col, y_col, label_col=None, color=COLOR_ACCENT, title="", height=398,
                   xref_line=None, yref_line=None, color_col=None, color_map=None):
     kwargs = dict(
         data_frame=df, x=x_col, y=y_col,
@@ -443,7 +443,7 @@ def scatter_chart(df, x_col, y_col, label_col=None, color=COLOR_ACCENT, title=""
             textposition="top center",
             textfont=dict(size=PLOT_TEXT_SIZE, color=COLOR_TEXT),
             mode="markers+text",
-            marker=dict(size=9)
+            marker=dict(size=7)
         )
     if xref_line is not None:
         fig.add_vline(x=xref_line, line_dash="dash", line_color=COLOR_MUTED, line_width=1)
@@ -455,7 +455,7 @@ def scatter_chart(df, x_col, y_col, label_col=None, color=COLOR_ACCENT, title=""
     return fig
 
 
-def grouped_bar(df, x_col, y_cols, colors, title="", height=360, names=None, show_values_inside=False):
+def grouped_bar(df, x_col, y_cols, colors, title="", height=358, names=None, show_values_inside=False):
     fig = go.Figure()
     for i, yc in enumerate(y_cols):
         trace_kwargs = dict(
@@ -547,14 +547,14 @@ def render_quadrant_table(table_df, height):
                 max-height: {height}px;
                 overflow: auto;
                 border: 1px solid {COLOR_BORDER};
-                border-radius: 8px;
+                border-radius: 6px;
             }}
             .quadrant-table {{
                 width: 100%;
                 border-collapse: collapse;
                 background: {COLOR_SURFACE};
                 color: {COLOR_TEXT};
-                font-size: 18px;
+                font-size: 14px;
             }}
             .quadrant-table th {{
                 position: sticky;
@@ -562,16 +562,16 @@ def render_quadrant_table(table_df, height):
                 z-index: 1;
                 background: #1E2230;
                 color: {COLOR_TEXT};
-                font-size: 18px;
+                font-size: 14px;
                 font-weight: 700;
                 text-align: left;
-                padding: 10px 12px;
+                padding: 8px 10px;
                 border-bottom: 1px solid {COLOR_BORDER};
             }}
             .quadrant-table td {{
                 padding: 9px 12px;
                 border-bottom: 1px solid {COLOR_BORDER};
-                font-size: 18px;
+                font-size: 14px;
             }}
             .quadrant-table tr:last-child td {{
                 border-bottom: 0;
@@ -611,7 +611,7 @@ def format_rank_change_label(change, is_new=False):
     return f"{direction}{abs(int(change))}"
 
 
-def want_change_bar(df, color, sort_ascending, height=320, x_range_mode="auto"):
+def want_change_bar(df, color, sort_ascending, height=318, x_range_mode="auto"):
     chart_df = df.sort_values("want_pct_change", ascending=sort_ascending).copy()
     max_abs = chart_df["want_pct_change"].abs().max()
     if x_range_mode == "negative_to_zero":
@@ -715,11 +715,11 @@ if page == "Главная":
                 marker_color=COLOR_WANT,
                 text=top10["want_pct"].apply(lambda v: f"{v*100:.1f}%"),
                 textposition="outside",
-                textfont=dict(color=COLOR_TEXT, size=16),
+                textfont=dict(color=COLOR_TEXT, size=14),
             ))
             update_layout_with_defaults(fig,
-                height=360,
-                yaxis=dict(autorange="reversed", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=16)),
+                height=358,
+                yaxis=dict(autorange="reversed", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=14)),
                 xaxis=dict(title="Want %", gridcolor=COLOR_BORDER, range=[0,1], title_font=dict(color=COLOR_TEXT, size=PLOT_AXIS_TITLE_SIZE)),
                 bargap=0.2,
                 showlegend=False,
@@ -741,11 +741,11 @@ if page == "Главная":
                 marker_color=COLOR_NOT_WANT,
                 text=anti10["not_want_pct"].apply(lambda v: f"{v*100:.1f}%"),
                 textposition="outside",
-                textfont=dict(color=COLOR_TEXT, size=16),
+                textfont=dict(color=COLOR_TEXT, size=14),
             ))
             update_layout_with_defaults(fig,
-                height=360,
-                yaxis=dict(autorange="reversed", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=16)),
+                height=358,
+                yaxis=dict(autorange="reversed", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=14)),
                 xaxis=dict(title="Not Want %", gridcolor=COLOR_BORDER, range=[0,1], title_font=dict(color=COLOR_TEXT, size=PLOT_AXIS_TITLE_SIZE)),
                 bargap=0.2,
                 showlegend=False,
@@ -767,7 +767,7 @@ if page == "Главная":
                 gender_counts["gender"].tolist(),
                 gender_counts["count"].tolist(),
                 [COLOR_MAN, COLOR_WOMAN, COLOR_UNSURE, COLOR_UNKNOWN],
-                height=280
+                height=278
             )
             st.plotly_chart(fig, use_container_width=True)
         else:
@@ -783,7 +783,7 @@ if page == "Главная":
             ["Хотят", "Не хотят", "Неуверены", "Не знают"],
             [avg_want, avg_not_want, avg_unsure, avg_unknown],
             [COLOR_WANT, COLOR_NOT_WANT, COLOR_UNSURE, COLOR_UNKNOWN],
-            height=280
+            height=278
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -803,8 +803,8 @@ if page == "Главная":
             textfont=dict(color=COLOR_TEXT, size=PLOT_TEXT_SIZE),
         ))
         update_layout_with_defaults(fig,
-            height=500,
-            xaxis=dict(tickangle=-35, tickfont=dict(color=COLOR_TEXT, size=17)),
+            height=498,
+            xaxis=dict(tickangle=-35, tickfont=dict(color=COLOR_TEXT, size=15)),
             yaxis=dict(range=[0, 0.4], showticklabels=False))
         st.plotly_chart(fig, use_container_width=True)
 
@@ -829,7 +829,7 @@ elif page == "Профиль респондентов":
             age_data.columns = ["age_group", "count"]
             age_data["pct"] = (age_data["count"] / age_data["count"].sum() * 100).round(1)
             age_data["text"] = age_data["pct"].astype(str) + "%"
-            fig = bar_chart_horizontal(age_data, "count", "age_group", color=COLOR_ACCENT, height=320, text_col="text")
+            fig = bar_chart_horizontal(age_data, "count", "age_group", color=COLOR_ACCENT, height=318, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
     with row1_col2:
@@ -839,7 +839,7 @@ elif page == "Профиль респондентов":
             exp_data.columns = ["experience_group", "count"]
             exp_data["pct"] = (exp_data["count"] / exp_data["count"].sum() * 100).round(1)
             exp_data["text"] = exp_data["pct"].astype(str) + "%"
-            fig = bar_chart_horizontal(exp_data, "count", "experience_group", color=COLOR_UNSURE, height=320, text_col="text")
+            fig = bar_chart_horizontal(exp_data, "count", "experience_group", color=COLOR_UNSURE, height=318, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
     with row1_col3:
@@ -848,7 +848,7 @@ elif page == "Профиль респондентов":
             g = filtered_r["gender"].value_counts().reset_index()
             g.columns = ["gender", "count"]
             fig = donut_chart(g["gender"].tolist(), g["count"].tolist(),
-                              [COLOR_MAN, COLOR_WOMAN, COLOR_UNSURE], height=300)
+                              [COLOR_MAN, COLOR_WOMAN, COLOR_UNSURE], height=298)
             st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
@@ -862,7 +862,7 @@ elif page == "Профиль респондентов":
             grade_data.columns = ["grade", "count"]
             grade_data["pct"] = (grade_data["count"] / grade_data["count"].sum() * 100).round(1)
             grade_data["text"] = grade_data["pct"].astype(str) + "%"
-            fig = bar_chart_horizontal(grade_data, "count", "grade", color=COLOR_WANT, height=320, text_col="text")
+            fig = bar_chart_horizontal(grade_data, "count", "grade", color=COLOR_WANT, height=318, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
     with row2_col2:
@@ -872,7 +872,7 @@ elif page == "Профиль респондентов":
             spec_data.columns = ["specialization", "count"]
             spec_data["pct"] = (spec_data["count"] / spec_data["count"].sum() * 100).round(1)
             spec_data["text"] = spec_data["pct"].astype(str) + "%"
-            fig = bar_chart_horizontal(spec_data, "count", "specialization", color=COLOR_NOT_WANT, height=320, text_col="text")
+            fig = bar_chart_horizontal(spec_data, "count", "specialization", color=COLOR_NOT_WANT, height=318, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
@@ -886,7 +886,7 @@ elif page == "Профиль респондентов":
             ind_data.columns = ["industry", "count"]
             ind_data["pct"] = (ind_data["count"] / ind_data["count"].sum() * 100).round(1)
             ind_data["text"] = ind_data["pct"].astype(str) + "%"
-            fig = bar_chart_horizontal(ind_data, "count", "industry", color="#9B59B6", height=420, text_col="text")
+            fig = bar_chart_horizontal(ind_data, "count", "industry", color="#9B59B6", height=418, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
     with row3_col2:
@@ -896,7 +896,7 @@ elif page == "Профиль респондентов":
             city_data.columns = ["city", "count"]
             city_data["pct"] = (city_data["count"] / city_data["count"].sum() * 100).round(1)
             city_data["text"] = city_data["pct"].astype(str) + "%"
-            fig = bar_chart_horizontal(city_data, "count", "city", color="#E67E22", height=420, text_col="text")
+            fig = bar_chart_horizontal(city_data, "count", "city", color="#E67E22", height=418, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
 
@@ -930,7 +930,7 @@ elif page == "Факторы":
         df["text"] = df["pct"].astype(str) + "%"
         fig = bar_chart_horizontal(
             df, sort_col, "factor_name_clean", color=color,
-            title=title, height=max(320, len(df) * 28), text_col="text"
+            title=title, height=max(318, len(df) * 26), text_col="text"
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -959,7 +959,7 @@ elif page == "Факторы":
                 fig = bar_chart_horizontal(fcv_sorted, "count", "category",
                                            color=COLOR_ACCENT,
                                            title="Категории по количеству упоминаний",
-                                           height=max(300, len(fcv_sorted)*28),
+                                           height=max(298, len(fcv_sorted)*26),
                                            text_col="text")
                 st.plotly_chart(fig, use_container_width=True)
             with c2:
@@ -969,7 +969,7 @@ elif page == "Факторы":
                         fcv_sorted["pct"].tolist(),
                         px.colors.qualitative.Set2[:len(fcv_sorted)],
                         title="Доли категорий",
-                        height=500
+                        height=498
                     )
                     fig.update_layout(
                         margin=dict(t=60, b=100, l=40, r=40)
@@ -985,7 +985,7 @@ elif page == "Факторы":
             df_tok = ftv if sel_cat == "Все" else ftv[ftv["category"] == sel_cat]
             df_tok = df_tok.nlargest(25, "count").sort_values("count")
             fig = bar_chart_horizontal(df_tok, "count", "token", color="#9B59B6",
-                                       title=f"Топ токенов: {sel_cat}", height=max(320, len(df_tok)*26))
+                                       title=f"Топ токенов: {sel_cat}", height=max(318, len(df_tok)*24))
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("Нет данных")
@@ -1014,7 +1014,7 @@ elif page == "Факторы":
             ds = pd.DataFrame(source_counts)
             ds = ds.sort_values("count", ascending=True)
             fig = bar_chart_horizontal(ds, "count", "source", color="#E67E22",
-                                       title="Источники принятия решений", height=max(280, len(ds)*28))
+                                       title="Источники принятия решений", height=max(278, len(ds)*26))
             st.plotly_chart(fig, use_container_width=True)
 
 
@@ -1057,7 +1057,7 @@ elif page == "Общий рейтинг":
             unk_df["unknown_brand_pct"] = unk_df["unknown_brand_pct"].round(3)
             unk_df["text"] = unk_df["unknown_brand_pct"].apply(lambda v: f"{v*100:.1f}%")
             fig = bar_chart_horizontal(unk_df, "unknown_brand_pct", "company_name",
-                                       color=COLOR_UNKNOWN, title="Компании с наибольшей неизвестностью (%)", height=380, text_col="text")
+                                       color=COLOR_UNKNOWN, title="Компании с наибольшей неизвестностью (%)", height=378, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
     def quadrant_table(df, label, color, title_color,sort_col="want_pct"):
@@ -1105,7 +1105,7 @@ elif page == "Общий рейтинг":
         for col in pct_cols:
             if col in table_df.columns:
                 table_df[col] = table_df[col].apply(lambda x: f"{x*100:.1f}%")
-        render_quadrant_table(table_df, height=min(400, 40 + len(table_df) * 36))
+        render_quadrant_table(table_df, height=min(398, 38 + len(table_df) * 34))
         chart_df = df.nlargest(12, sort_col).copy()
         chart_df["not_want_negative"] = -chart_df["not_want_pct"]
         chart_df = chart_df.sort_values(sort_col)
@@ -1130,7 +1130,7 @@ elif page == "Общий рейтинг":
         ))
         update_layout_with_defaults(
             fig,
-            height=max(280, min(12, len(chart_df)) * 35),
+            height=max(278, min(12, len(chart_df)) * 33),
             barmode="relative",
             xaxis=dict(
                 zeroline=True,
@@ -1181,7 +1181,7 @@ elif page == "Общий рейтинг":
             ))
             update_layout_with_defaults(
                 fig,
-                height=max(500, len(top_missed) * 28),
+                height=max(498, len(top_missed) * 26),
                 showlegend=False,
                 yaxis=dict(gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=PLOT_TICK_SIZE)),
                 xaxis=dict(gridcolor=COLOR_BORDER, range=[0, top_missed[count_col].max() * 1.2], tickfont=dict(color=COLOR_TEXT, size=PLOT_TICK_SIZE)),
@@ -1221,7 +1221,7 @@ elif page == "Динамика":
                         axis=1
                     )
                     gainers["pct_label"] = gainers["want_pct_change"].apply(lambda v: f"{v:+.1%}")
-                    fig = want_change_bar(gainers, COLOR_WANT, sort_ascending=True, height=320)
+                    fig = want_change_bar(gainers, COLOR_WANT, sort_ascending=True, height=318)
                     st.plotly_chart(fig, use_container_width=True)
 
         with col2:
@@ -1243,7 +1243,7 @@ elif page == "Динамика":
                         decliners,
                         COLOR_NOT_WANT,
                         sort_ascending=False,
-                        height=320,
+                        height=318,
                         x_range_mode="negative_to_zero"
                     )
                     st.plotly_chart(fig, use_container_width=True)
@@ -1293,7 +1293,7 @@ elif page == "Динамика":
                     )
                 update_layout_with_defaults(
                     fig,
-                    height=max(280, min(15, len(new_co)) * 36),
+                    height=max(278, min(15, len(new_co)) * 34),
                     showlegend=False,
                     yaxis=dict(gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=PLOT_TICK_SIZE)),
                     xaxis=dict(tickformat=".0%", gridcolor=COLOR_BORDER, range=[0, max_want * 1.45]),
@@ -1361,7 +1361,7 @@ elif page == "Аналитика компании":
                     labels, values,
                     [COLOR_WANT, COLOR_NOT_WANT, COLOR_UNSURE, COLOR_UNKNOWN],
                     title=f"{company}: восприятие бренда",
-                    height=430
+                    height=428
                 )
                 fig.update_layout(margin=dict(l=50, r=90, t=36, b=80))
                 st.plotly_chart(fig, use_container_width=True)
@@ -1396,7 +1396,7 @@ elif page == "Аналитика компании":
                         y_range = [-0.01, 0.01] if max_abs == 0 else [-max_abs * 1.45, max_abs * 1.45]
                         update_layout_with_defaults(
                             fig,
-                            height=380,
+                            height=378,
                             showlegend=False,
                             yaxis=dict(
                                 tickformat=".0%",
@@ -1422,7 +1422,7 @@ elif page == "Аналитика компании":
                     })
                     fig = grouped_bar(comp_data, "Метрика", ["Компания", "Рынок (avg)"],
                                       [COLOR_ACCENT, COLOR_MUTED],
-                                      title="Сравнение с рынком", height=320)
+                                      title="Сравнение с рынком", height=318)
                     st.plotly_chart(fig, use_container_width=True)
                     
                     # ── ROW 2: Позиция на рынке  +  Три ранга ───────────────────
@@ -1458,7 +1458,7 @@ elif page == "Аналитика компании":
                         x=selected["want_pct"],
                         y=selected["not_want_pct"],
                         mode="markers+text",
-                        marker=dict(color=COLOR_ACCENT, size=25, line=dict(color=COLOR_TEXT, width=2)),
+                        marker=dict(color=COLOR_ACCENT, size=23, line=dict(color=COLOR_TEXT, width=2)),
                         text=[company],
                         textposition="top center",
                         textfont=dict(color=COLOR_TEXT, size=PLOT_TEXT_SIZE - 2),
@@ -1481,11 +1481,11 @@ elif page == "Аналитика компании":
                     fig.add_annotation(
                         x=qx, y=qy, text=qtext,
                         showarrow=False,
-                        font=dict(color=qcolor, size=17, family="DM Sans"),
+                        font=dict(color=qcolor, size=15, family="DM Sans"),
                         opacity=0.7,
                     )
                 update_layout_with_defaults(
-                    fig, height=420, showlegend=False,
+                    fig, height=418, showlegend=False,
                     xaxis=dict(title="Want %", tickformat=".0%", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=PLOT_TICK_SIZE)),
                     yaxis=dict(title="Not Want %", tickformat=".0%", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=PLOT_TICK_SIZE)),
                 )
@@ -1524,22 +1524,22 @@ elif page == "Аналитика компании":
                                 background: #161920;
                                 border: 1px solid #2A2F40;
                                 border-left: 4px solid {bar_color};
-                                border-radius: 10px;
-                                padding: 14px 18px;
-                                margin-bottom: 12px;
+                                border-radius: 6px;
+                                padding: 12px 16px;
+                                margin-bottom: 10px;
                             ">
-                                <div style="font-size:0.75rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.08em;font-family:'DM Sans',sans-serif;">
+                                <div style="font-size:0.6rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.08em;font-family:'DM Sans',sans-serif;">
                                     {rank_label}
                                 </div>
-                                <div style="display:flex;align-items:baseline;gap:12px;margin-top:4px;">
-                                    <span style="font-size:2.4rem;font-weight:800;font-family:DM Sans,sans-serif;color:{bar_color};">
+                                <div style="display:flex;align-items:baseline;gap:10px;margin-top:2px;">
+                                    <span style="font-size:2.2rem;font-weight:800;font-family:DM Sans,sans-serif;color:{bar_color};">
                                         #{rank_int}
                                     </span>
-                                    <span style="font-size:1rem;color:#6B7280;">из {total_cos}</span>
-                                    {"<span style='font-size:0.9rem;color:#6B7280;margin-left:auto;'>" + delta_text + "</span>" if delta_text else ""}
+                                    <span style="font-size:0.8rem;color:#6B7280;">из {total_cos}</span>
+                                    {"<span style='font-size:0.7rem;color:#6B7280;margin-left:auto;'>" + delta_text + "</span>" if delta_text else ""}
                                 </div>
-                                <div style="margin-top:8px;background:#2A2F40;border-radius:4px;height:6px;overflow:hidden;">
-                                    <div style="width:{pct_rank*100:.1f}%;background:{bar_color};height:100%;border-radius:4px;opacity:0.8;"></div>
+                                <div style="margin-top:6px;background:#2A2F40;border-radius:2px;height:4px;overflow:hidden;">
+                                    <div style="width:{pct_rank*100:.1f}%;background:{bar_color};height:100%;border-radius:2px;opacity:0.8;"></div>
                                 </div>
                             </div>
                             """,
@@ -1576,7 +1576,7 @@ elif page == "Аналитика компании":
                 colors_comp[:len(metrics)],
                 title="Сравнение компаний",
                 names=[metric_labels.get(m, m) for m in metrics],
-                height=420,
+                height=418,
                 show_values_inside=True
             )
             st.plotly_chart(fig, use_container_width=True)
@@ -1610,7 +1610,7 @@ elif page == "Аналитика компании":
                     x=scatter_df["want_pct"],
                     y=scatter_df["not_want_pct"],
                     mode="markers+text",
-                    marker=dict(color=scatter_df["qcolor"].tolist(), size=25, line=dict(color=COLOR_TEXT, width=2)),
+                    marker=dict(color=scatter_df["qcolor"].tolist(), size=23, line=dict(color=COLOR_TEXT, width=2)),
                     text=scatter_df["company_name"],
                     textposition="top center",
                     textfont=dict(color=COLOR_TEXT, size=PLOT_TEXT_SIZE - 2),
@@ -1631,11 +1631,11 @@ elif page == "Аналитика компании":
                     fig.add_annotation(
                         x=qx, y=qy, text=qtext,
                         showarrow=False,
-                        font=dict(color=qcolor, size=25, family="DM Sans"),
+                        font=dict(color=qcolor, size=23, family="DM Sans"),
                         opacity=0.7,
                     )
                 update_layout_with_defaults(
-                    fig, height=500, showlegend=False,
+                    fig, height=498, showlegend=False,
                     xaxis=dict(title="Want %", tickformat=".0%", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=PLOT_TICK_SIZE)),
                     yaxis=dict(title="Not Want %", tickformat=".0%", gridcolor=COLOR_BORDER, tickfont=dict(color=COLOR_TEXT, size=PLOT_TICK_SIZE)),
                 )
@@ -1689,7 +1689,7 @@ elif page == "Аналитика опроса":
         scv_sorted["text"] = scv_sorted["pct"].astype(str) + "%"
         fig = bar_chart_horizontal(scv_sorted, "count", "category_ru",
                                     color=COLOR_ACCENT, title="Количество упоминаний",
-                                    height=max(500, len(scv_sorted)*30), text_col="text")
+                                    height=max(498, len(scv_sorted)*28), text_col="text")
         st.plotly_chart(fig, use_container_width=True)
 
         # Per-category breakdown
@@ -1700,7 +1700,7 @@ elif page == "Аналитика опроса":
             df_stv = stv if sel_cat == "Все" else stv[stv["category_ru"] == sel_cat]
             df_stv = df_stv.nlargest(30, "count").sort_values("count")
             fig = bar_chart_horizontal(df_stv, "count", "token", color="#9B59B6",
-                                    title=f"Токены: {sel_cat}", height=max(360, len(df_stv)*26))
+                                    title=f"Токены: {sel_cat}", height=max(358, len(df_stv)*24))
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("Нет данных STV")

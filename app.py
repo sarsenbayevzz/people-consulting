@@ -22,7 +22,7 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* Import fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700;800&display=swap');
 
     /* Root variables */
     :root {
@@ -73,7 +73,7 @@ st.markdown("""
         padding: 16px 20px !important;
     }
     [data-testid="stMetricValue"] {
-        font-family: 'Syne', sans-serif !important;
+        font-family: 'DM Sans', sans-serif !important;
         font-size: 3rem !important;
         font-weight: 700 !important;
         color: var(--text) !important;
@@ -90,7 +90,7 @@ st.markdown("""
 
     /* Tabs */
     [data-testid="stTabs"] [role="tab"] {
-        font-family: 'Syne', sans-serif;
+        font-family: 'DM Sans', sans-serif;
         font-weight: 700;
         font-size: 1.08rem;
         color: var(--muted) !important;
@@ -1481,7 +1481,7 @@ elif page == "Аналитика компании":
                     fig.add_annotation(
                         x=qx, y=qy, text=qtext,
                         showarrow=False,
-                        font=dict(color=qcolor, size=17, family="Syne"),
+                        font=dict(color=qcolor, size=17, family="DM Sans"),
                         opacity=0.7,
                     )
                 update_layout_with_defaults(
@@ -1528,7 +1528,7 @@ elif page == "Аналитика компании":
                                 padding: 14px 18px;
                                 margin-bottom: 12px;
                             ">
-                                <div style="font-size:0.75rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.08em;font-family:Syne,sans-serif;">
+                                <div style="font-size:0.75rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.08em;font-family:'DM Sans',sans-serif;">
                                     {rank_label}
                                 </div>
                                 <div style="display:flex;align-items:baseline;gap:12px;margin-top:4px;">
@@ -1631,7 +1631,7 @@ elif page == "Аналитика компании":
                     fig.add_annotation(
                         x=qx, y=qy, text=qtext,
                         showarrow=False,
-                        font=dict(color=qcolor, size=25, family="Syne"),
+                        font=dict(color=qcolor, size=25, family="DM Sans"),
                         opacity=0.7,
                     )
                 update_layout_with_defaults(

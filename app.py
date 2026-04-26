@@ -164,8 +164,8 @@ st.markdown("""
     .badge-reject { background: rgba(231,76,60,0.15); color: #E74C3C; border: 1px solid #E74C3C; }
     .badge-neutral { background: rgba(149,165,166,0.15); color: #95A5A6; border: 1px solid #95A5A6; }
 
-    /* Hide default streamlit branding */
-    #MainMenu, footer, header { visibility: hidden; }
+    /* Hide default streamlit branding, keep header so sidebar toggle stays visible */
+    #MainMenu, footer { visibility: hidden; }
 
     /* Plotly chart backgrounds */
     .js-plotly-plot .plotly {

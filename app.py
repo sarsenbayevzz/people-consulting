@@ -367,13 +367,14 @@ filtered_scv = scv.copy()
 filtered_stv = stv.copy()
 
 industry_values = filters.get("industry", [])
-if industry_values and "current_industry" in filtered_c26.columns:
-    filtered_c26 = filtered_c26[filtered_c26["current_industry"].isin(industry_values)].copy()
-    if "company_name" in filtered_c25.columns:
+if industry_values:
+    if "current_industry" in filtered_c26.columns:
+        filtered_c26 = filtered_c26[filtered_c26["current_industry"].isin(industry_values)].copy()
+    if "company_name" in filtered_c25.columns and len(filtered_c26) > 0:
         filtered_c25 = filtered_c25[filtered_c25["company_name"].isin(filtered_c26["company_name"])].copy()
-    if "company_name" in filtered_y.columns:
+    if "company_name" in filtered_y.columns and len(filtered_c26) > 0:
         filtered_y = filtered_y[filtered_y["company_name"].isin(filtered_c26["company_name"])].copy()
-    if "company" in filtered_tmc.columns:
+    if "company" in filtered_tmc.columns and len(filtered_c26) > 0:
         filtered_tmc = filtered_tmc[filtered_tmc["company"].isin(filtered_c26["company_name"])].copy()
 
 # Filter factors, survey categories and tokens based on filtered respondents
@@ -748,6 +749,10 @@ if page == "Главная":
 
     with col1:
         st.markdown("### Топ-10 компаний")
+        # Debug info
+        if industry_values:
+            st.caption(f"📊 Компании в фильтре: {len(filtered_c26)} (индустрии: {', '.join(industry_values)})")
+
         top10 = filtered_c26.nlargest(10, "want_pct")[["company_name", "want_pct", "not_want_pct"]].reset_index(drop=True)
         if not top10.empty:
             fig = go.Figure()
@@ -774,6 +779,10 @@ if page == "Главная":
 
     with col2:
         st.markdown("### Анти-топ компаний")
+        # Debug info
+        if industry_values:
+            st.caption(f"📊 Компании в фильтре: {len(filtered_c26)} (индустрии: {', '.join(industry_values)})")
+
         anti10 = filtered_c26.nlargest(10, "not_want_pct")[["company_name", "not_want_pct", "want_pct"]].reset_index(drop=True)
         if not anti10.empty:
             fig = go.Figure()

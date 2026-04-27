@@ -1674,7 +1674,7 @@ elif page == "Аналитика компании":
     with tab_compare:
         st.markdown("### Сравнение двух или более компаний")
         company_options = sorted(filtered_c26["company_name"].unique())
-        default_companies = ['Beeline','Kcell', 'Tele2/Altel', 'Transtelecom']
+        default_companies = []
         compare_companies = st.multiselect(
             "Выберите компании",
             company_options,

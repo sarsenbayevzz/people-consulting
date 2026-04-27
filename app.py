@@ -417,6 +417,15 @@ any_filter = any(v for v in filters.values())
 # Filter company and comparison datasets by selected industry
 # Aggregate c26 metrics dynamically based on filtered respondents
 filtered_c26 = aggregate_company_metrics(filtered_r, crl)
+
+# Filter companies by selected industry
+industry_values = filters.get("industry", [])
+if industry_values and not filtered_c26.empty:
+    # Get company names from selected industries in original c26
+    companies_in_industry = c26[c26["current_industry"].isin(industry_values)]["company_name"].unique()
+    # Keep only companies from selected industry in filtered_c26
+    filtered_c26 = filtered_c26[filtered_c26["company_name"].isin(companies_in_industry)].copy()
+
 filtered_c25 = c25.copy()
 filtered_y   = y.copy()
 filtered_tmc = tmc.copy()
@@ -426,19 +435,15 @@ filtered_ftv = ftv.copy()
 filtered_scv = scv.copy()
 filtered_stv = stv.copy()
 
-# For c25, y, tmc: filter by industry only (cannot recalculate without historical responses)
-industry_values = filters.get("industry", [])
-if industry_values:
-    if "current_industry" in c26.columns:
-        # Get company names from filtered_c26 to maintain consistency
-        filtered_company_names = set(filtered_c26["company_name"].unique()) if not filtered_c26.empty else set()
-        if filtered_company_names:
-            if "company_name" in filtered_c25.columns:
-                filtered_c25 = filtered_c25[filtered_c25["company_name"].isin(filtered_company_names)].copy()
-            if "company_name" in filtered_y.columns:
-                filtered_y = filtered_y[filtered_y["company_name"].isin(filtered_company_names)].copy()
-            if "company" in filtered_tmc.columns:
-                filtered_tmc = filtered_tmc[filtered_tmc["company"].isin(filtered_company_names)].copy()
+# For c25, y, tmc: filter by industry and matching companies
+if industry_values and not filtered_c26.empty:
+    filtered_company_names = set(filtered_c26["company_name"].unique())
+    if "company_name" in filtered_c25.columns:
+        filtered_c25 = filtered_c25[filtered_c25["company_name"].isin(filtered_company_names)].copy()
+    if "company_name" in filtered_y.columns:
+        filtered_y = filtered_y[filtered_y["company_name"].isin(filtered_company_names)].copy()
+    if "company" in filtered_tmc.columns:
+        filtered_tmc = filtered_tmc[filtered_tmc["company"].isin(filtered_company_names)].copy()
 
 # Filter factors, survey categories and tokens based on filtered respondents
 if "respondent_id" in filtered_f.columns and "respondent_id" in filtered_r.columns:

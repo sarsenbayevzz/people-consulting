@@ -242,6 +242,7 @@ def load_data():
             "respondents": pd.read_csv("respondents.csv"),
             "company_2026": pd.read_csv("company_2026.csv"),
             "company_2025": pd.read_csv("company_2025.csv"),
+            "company_responses_long": pd.read_csv("company_responses_long.csv"),
             "factors": pd.read_csv("factors.csv"),
             "yoy": pd.read_csv("yoy_compare.csv"),
             "fcv": pd.read_csv("factor_categories_viz.csv"),
@@ -259,6 +260,7 @@ data = load_data()
 r   = data["respondents"]
 c26 = data["company_2026"]
 c25 = data["company_2025"]
+crl = data["company_responses_long"]
 f   = data["factors"]
 y   = data["yoy"]
 fcv = data["fcv"]
@@ -281,6 +283,63 @@ def sort_values(values, column):
         return sorted(values)
     idx = {v: i for i, v in enumerate(order)}
     return sorted(values, key=lambda v: (idx.get(v, len(idx)), str(v)))
+
+# =========================================================
+# COMPANY METRICS AGGREGATION
+# =========================================================
+def aggregate_company_metrics(filtered_respondents, crl_data):
+    """
+    Aggregate company metrics based on filtered respondents.
+
+    Args:
+        filtered_respondents: Filtered respondents dataframe with respondent_id
+        crl_data: Raw company_responses_long data
+
+    Returns:
+        Aggregated company metrics dataframe
+    """
+    if filtered_respondents.empty or crl_data.empty:
+        return pd.DataFrame()
+
+    # Get respondent IDs from filtered respondents
+    respondent_ids = set(filtered_respondents["respondent_id"].dropna().unique())
+
+    # Filter responses to only include filtered respondents
+    crl_filtered = crl_data[crl_data["respondent_id"].isin(respondent_ids)].copy()
+
+    if crl_filtered.empty:
+        return pd.DataFrame()
+
+    # Group by company and aggregate
+    agg_data = crl_filtered.groupby("company_name").agg({
+        "is_want": ["sum", "count"],
+        "is_not_want": "sum",
+        "is_unsure": "sum",
+        "is_unknown_brand": "sum"
+    }).reset_index()
+
+    # Flatten column names
+    agg_data.columns = ["company_name", "want_count", "response_count", "not_want_count", "unsure_count", "unknown_brand_count"]
+
+    # Calculate percentages
+    agg_data["want_pct"] = agg_data["want_count"] / agg_data["response_count"]
+    agg_data["not_want_pct"] = agg_data["not_want_count"] / agg_data["response_count"]
+    agg_data["unsure_pct"] = agg_data["unsure_count"] / agg_data["response_count"]
+    agg_data["unknown_brand_pct"] = agg_data["unknown_brand_count"] / agg_data["response_count"]
+
+    # Calculate ranks
+    agg_data["rank_want"] = agg_data["want_pct"].rank(method="min", ascending=False).astype(int)
+    agg_data["rank_not_want"] = agg_data["not_want_pct"].rank(method="min", ascending=False).astype(int)
+    agg_data["rank_unknown_brand"] = agg_data["unknown_brand_pct"].rank(method="min", ascending=False).astype(int)
+
+    # Keep only necessary columns
+    result = agg_data[[
+        "company_name",
+        "want_pct", "not_want_pct", "unsure_pct", "unknown_brand_pct",
+        "rank_want", "rank_not_want", "rank_unknown_brand"
+    ]].copy()
+
+    return result
 
 # =========================================================
 # SIDEBAR
@@ -356,7 +415,8 @@ for key, values in filters.items():
 any_filter = any(v for v in filters.values())
 
 # Filter company and comparison datasets by selected industry
-filtered_c26 = c26.copy()
+# Aggregate c26 metrics dynamically based on filtered respondents
+filtered_c26 = aggregate_company_metrics(filtered_r, crl)
 filtered_c25 = c25.copy()
 filtered_y   = y.copy()
 filtered_tmc = tmc.copy()
@@ -366,16 +426,19 @@ filtered_ftv = ftv.copy()
 filtered_scv = scv.copy()
 filtered_stv = stv.copy()
 
+# For c25, y, tmc: filter by industry only (cannot recalculate without historical responses)
 industry_values = filters.get("industry", [])
 if industry_values:
-    if "current_industry" in filtered_c26.columns:
-        filtered_c26 = filtered_c26[filtered_c26["current_industry"].isin(industry_values)].copy()
-    if "company_name" in filtered_c25.columns and len(filtered_c26) > 0:
-        filtered_c25 = filtered_c25[filtered_c25["company_name"].isin(filtered_c26["company_name"])].copy()
-    if "company_name" in filtered_y.columns and len(filtered_c26) > 0:
-        filtered_y = filtered_y[filtered_y["company_name"].isin(filtered_c26["company_name"])].copy()
-    if "company" in filtered_tmc.columns and len(filtered_c26) > 0:
-        filtered_tmc = filtered_tmc[filtered_tmc["company"].isin(filtered_c26["company_name"])].copy()
+    if "current_industry" in c26.columns:
+        # Get company names from filtered_c26 to maintain consistency
+        filtered_company_names = set(filtered_c26["company_name"].unique()) if not filtered_c26.empty else set()
+        if filtered_company_names:
+            if "company_name" in filtered_c25.columns:
+                filtered_c25 = filtered_c25[filtered_c25["company_name"].isin(filtered_company_names)].copy()
+            if "company_name" in filtered_y.columns:
+                filtered_y = filtered_y[filtered_y["company_name"].isin(filtered_company_names)].copy()
+            if "company" in filtered_tmc.columns:
+                filtered_tmc = filtered_tmc[filtered_tmc["company"].isin(filtered_company_names)].copy()
 
 # Filter factors, survey categories and tokens based on filtered respondents
 if "respondent_id" in filtered_f.columns and "respondent_id" in filtered_r.columns:

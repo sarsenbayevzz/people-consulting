@@ -1225,7 +1225,7 @@ elif page == "Общий рейтинг":
             if col in table_df.columns:
                 table_df[col] = table_df[col].apply(lambda x: f"{x*100:.1f}%")
         # Use fixed height if provided, otherwise calculate dynamically
-        height_to_use = fixed_height if fixed_height is not None else min(398, 38 + len(table_df) * 34)
+        height_to_use = fixed_height if fixed_height is not None else min(400, 40 + len(table_df) * 36)
         render_quadrant_table(table_df, height=height_to_use)
         chart_df = df.nlargest(12, sort_col).copy()
         chart_df["not_want_negative"] = -chart_df["not_want_pct"]

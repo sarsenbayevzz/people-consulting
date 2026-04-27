@@ -243,7 +243,7 @@ def load_data():
             "company_2026": pd.read_csv("company_2026.csv"),
             "company_2025": pd.read_csv("company_2025.csv"),
             "company_responses_long": pd.read_csv("company_responses_long.csv"),
-            "factors": pd.read_csv("factors.csv"),
+            "factors": pd.read_csv("factors_long.csv"),
             "yoy": pd.read_csv("yoy_compare.csv"),
             "fcv": pd.read_csv("factor_categories_viz.csv"),
             "ftv": pd.read_csv("factor_tokens_viz.csv"),

@@ -360,6 +360,11 @@ filtered_c26 = c26.copy()
 filtered_c25 = c25.copy()
 filtered_y   = y.copy()
 filtered_tmc = tmc.copy()
+filtered_f   = f.copy()
+filtered_fcv = fcv.copy()
+filtered_ftv = ftv.copy()
+filtered_scv = scv.copy()
+filtered_stv = stv.copy()
 
 industry_values = filters.get("industry", [])
 if industry_values and "current_industry" in filtered_c26.columns:
@@ -370,6 +375,27 @@ if industry_values and "current_industry" in filtered_c26.columns:
         filtered_y = filtered_y[filtered_y["company_name"].isin(filtered_c26["company_name"])].copy()
     if "company" in filtered_tmc.columns:
         filtered_tmc = filtered_tmc[filtered_tmc["company"].isin(filtered_c26["company_name"])].copy()
+
+# Filter factors, survey categories and tokens based on filtered respondents
+if "respondent_id" in filtered_f.columns and "respondent_id" in filtered_r.columns:
+    respondent_ids = set(filtered_r["respondent_id"].dropna().unique())
+    filtered_f = filtered_f[filtered_f["respondent_id"].isin(respondent_ids)].copy()
+
+if "respondent_id" in filtered_fcv.columns and "respondent_id" in filtered_r.columns:
+    respondent_ids = set(filtered_r["respondent_id"].dropna().unique())
+    filtered_fcv = filtered_fcv[filtered_fcv["respondent_id"].isin(respondent_ids)].copy()
+
+if "respondent_id" in filtered_ftv.columns and "respondent_id" in filtered_r.columns:
+    respondent_ids = set(filtered_r["respondent_id"].dropna().unique())
+    filtered_ftv = filtered_ftv[filtered_ftv["respondent_id"].isin(respondent_ids)].copy()
+
+if "respondent_id" in filtered_scv.columns and "respondent_id" in filtered_r.columns:
+    respondent_ids = set(filtered_r["respondent_id"].dropna().unique())
+    filtered_scv = filtered_scv[filtered_scv["respondent_id"].isin(respondent_ids)].copy()
+
+if "respondent_id" in filtered_stv.columns and "respondent_id" in filtered_r.columns:
+    respondent_ids = set(filtered_r["respondent_id"].dropna().unique())
+    filtered_stv = filtered_stv[filtered_stv["respondent_id"].isin(respondent_ids)].copy()
 
 filter_active = any_filter
 filter_label = f"Фильтр активен · {len(filtered_r)} / {len(r)} респондентов" if filter_active else f"Все данные · {len(r)} респондентов"
@@ -938,7 +964,7 @@ elif page == "Факторы":
     ])
 
     def factor_chart(factor_type, color, title):
-        df = f[f["factor_type"] == factor_type].copy() if "factor_type" in f.columns else pd.DataFrame()
+        df = filtered_f[filtered_f["factor_type"] == factor_type].copy() if "factor_type" in filtered_f.columns else pd.DataFrame()
         if df.empty:
             st.info("Нет данных")
             return
@@ -968,8 +994,8 @@ elif page == "Факторы":
 
     with tab4:
         st.markdown("### Категории факторов")
-        if not fcv.empty and "category" in fcv.columns and "count" in fcv.columns:
-            fcv_sorted = fcv.sort_values("count", ascending=True)
+        if not filtered_fcv.empty and "category" in filtered_fcv.columns and "count" in filtered_fcv.columns:
+            fcv_sorted = filtered_fcv.sort_values("count", ascending=True)
             fcv_sorted["pct"] = (fcv_sorted["count"] / fcv_sorted["count"].sum() * 100).round(1)
             fcv_sorted["text"] = fcv_sorted["pct"].astype(str) + "%"
             c1, c2 = st.columns(2)
@@ -995,12 +1021,12 @@ elif page == "Факторы":
                     st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("Нет данных")
-            
+
         st.markdown("### Токены факторов")
-        if not ftv.empty and "token" in ftv.columns and "count" in ftv.columns:
-            cats = ftv["category"].unique().tolist() if "category" in ftv.columns else []
+        if not filtered_ftv.empty and "token" in filtered_ftv.columns and "count" in filtered_ftv.columns:
+            cats = filtered_ftv["category"].unique().tolist() if "category" in filtered_ftv.columns else []
             sel_cat = st.selectbox("Категория", ["Все"] + cats)
-            df_tok = ftv if sel_cat == "Все" else ftv[ftv["category"] == sel_cat]
+            df_tok = filtered_ftv if sel_cat == "Все" else filtered_ftv[filtered_ftv["category"] == sel_cat]
             df_tok = df_tok.nlargest(25, "count").sort_values("count")
             fig = bar_chart_horizontal(df_tok, "count", "token", color="#9B59B6",
                                        title=f"Топ токенов: {sel_cat}", height=max(318, len(df_tok)*24))
@@ -1696,13 +1722,13 @@ elif page == "Аналитика опроса":
         "structure": "Упростить структуру и логику опроса",
         "add_info": "Добавить больше пояснений или информации",
     }
-    
-    scv["category_ru"] = (scv["category"].map(CATEGORY_RU).fillna(scv["category"]))
-    stv["category_ru"] = (stv["category"].map(CATEGORY_RU).fillna(stv["category"]))
-    
+
+    filtered_scv["category_ru"] = (filtered_scv["category"].map(CATEGORY_RU).fillna(filtered_scv["category"]))
+    filtered_stv["category_ru"] = (filtered_stv["category"].map(CATEGORY_RU).fillna(filtered_stv["category"]))
+
     st.markdown("### Категории по улучшению опроса по мнению респондентов")
-    if not scv.empty and "category" in scv.columns and "count" in scv.columns:
-        scv_sorted = scv.sort_values("count", ascending=True)
+    if not filtered_scv.empty and "category" in filtered_scv.columns and "count" in filtered_scv.columns:
+        scv_sorted = filtered_scv.sort_values("count", ascending=True)
         scv_sorted["pct"] = (scv_sorted["count"] / scv_sorted["count"].sum() * 100).round(1)
         scv_sorted["text"] = scv_sorted["pct"].astype(str) + "%"
         fig = bar_chart_horizontal(scv_sorted, "count", "category_ru",
@@ -1712,10 +1738,10 @@ elif page == "Аналитика опроса":
 
         # Per-category breakdown
         st.markdown("### Токены по категориям")
-        if not stv.empty and "token" in stv.columns and "count" in stv.columns:
-            cats_stv = stv["category_ru"].unique().tolist() if "category_ru" in stv.columns else []
+        if not filtered_stv.empty and "token" in filtered_stv.columns and "count" in filtered_stv.columns:
+            cats_stv = filtered_stv["category_ru"].unique().tolist() if "category_ru" in filtered_stv.columns else []
             sel_cat = st.selectbox("Категория", ["Все"] + cats_stv, key="stv_cat")
-            df_stv = stv if sel_cat == "Все" else stv[stv["category_ru"] == sel_cat]
+            df_stv = filtered_stv if sel_cat == "Все" else filtered_stv[filtered_stv["category_ru"] == sel_cat]
             df_stv = df_stv.nlargest(30, "count").sort_values("count")
             fig = bar_chart_horizontal(df_stv, "count", "token", color="#9B59B6",
                                     title=f"Токены: {sel_cat}", height=max(358, len(df_stv)*24))

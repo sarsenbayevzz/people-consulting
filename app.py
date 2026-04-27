@@ -293,13 +293,21 @@ with st.sidebar:
         opts = sort_values(r[column].dropna().unique().tolist(), column)
         return st.multiselect(label, options=opts)
 
+    industry_options = sort_values(
+        sorted(set(
+            r["current_industry"].dropna().astype(str).tolist()
+            + (c26["current_industry"].dropna().astype(str).tolist() if "current_industry" in c26.columns else [])
+        )),
+        "current_industry"
+    )
+
     filters = {
         "city":           multiselect_filter("Город",         "city"),
         "grade":          multiselect_filter("Грейд",         "grade"),
         "experience":     multiselect_filter("Опыт",          "experience_group"),
         "gender":         multiselect_filter("Пол",           "gender"),
         "age":            multiselect_filter("Возраст",       "age_group"),
-        "industry":       multiselect_filter("Индустрия",     "current_industry"),
+        "industry":       st.multiselect("Индустрия", options=industry_options),
         "specialization": multiselect_filter("Специализация", "specialization"),
     }
 
@@ -347,12 +355,21 @@ for key, values in filters.items():
 
 any_filter = any(v for v in filters.values())
 
-# When filters are applied, scale company data proportionally
-# (in real integration this would join respondent choices to company data)
-# For now, use full company data but show filter indicator
+# Filter company and comparison datasets by selected industry
 filtered_c26 = c26.copy()
 filtered_c25 = c25.copy()
 filtered_y   = y.copy()
+filtered_tmc = tmc.copy()
+
+industry_values = filters.get("industry", [])
+if industry_values and "current_industry" in filtered_c26.columns:
+    filtered_c26 = filtered_c26[filtered_c26["current_industry"].isin(industry_values)].copy()
+    if "company_name" in filtered_c25.columns:
+        filtered_c25 = filtered_c25[filtered_c25["company_name"].isin(filtered_c26["company_name"])].copy()
+    if "company_name" in filtered_y.columns:
+        filtered_y = filtered_y[filtered_y["company_name"].isin(filtered_c26["company_name"])].copy()
+    if "company" in filtered_tmc.columns:
+        filtered_tmc = filtered_tmc[filtered_tmc["company"].isin(filtered_c26["company_name"])].copy()
 
 filter_active = any_filter
 filter_label = f"Фильтр активен · {len(filtered_r)} / {len(r)} респондентов" if filter_active else f"Все данные · {len(r)} респондентов"
@@ -1162,10 +1179,10 @@ elif page == "Общий рейтинг":
 
     with tab6:
         st.markdown("### Топ пропущенных компаний по мнению респондентов")
-        if tmc.empty:
+        if filtered_tmc.empty:
             st.info("Нет данных top_missed_companies")
         else:
-            top_missed = tmc.sort_values("count", ascending=False).head(20) if "count" in tmc.columns else tmc.head(20)
+            top_missed = filtered_tmc.sort_values("count", ascending=False).head(20) if "count" in filtered_tmc.columns else filtered_tmc.head(20)
             company_col = "company" if "company" in top_missed.columns else top_missed.columns[0]
             count_col = "count" if "count" in top_missed.columns else top_missed.columns[1]
             top_missed = top_missed.sort_values(count_col, ascending=True).copy()

@@ -749,9 +749,6 @@ if page == "Главная":
 
     with col1:
         st.markdown("### Топ-10 компаний")
-        # Debug info
-        if industry_values:
-            st.caption(f"📊 Компании в фильтре: {len(filtered_c26)} (индустрии: {', '.join(industry_values)})")
 
         top10 = filtered_c26.nlargest(10, "want_pct")[["company_name", "want_pct", "not_want_pct"]].reset_index(drop=True)
         if not top10.empty:
@@ -779,9 +776,6 @@ if page == "Главная":
 
     with col2:
         st.markdown("### Анти-топ компаний")
-        # Debug info
-        if industry_values:
-            st.caption(f"📊 Компании в фильтре: {len(filtered_c26)} (индустрии: {', '.join(industry_values)})")
 
         anti10 = filtered_c26.nlargest(10, "not_want_pct")[["company_name", "not_want_pct", "want_pct"]].reset_index(drop=True)
         if not anti10.empty:

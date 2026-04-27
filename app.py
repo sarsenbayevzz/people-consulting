@@ -1154,6 +1154,10 @@ elif page == "Общий рейтинг":
     neutral       = filtered_c26[(filtered_c26["want_pct"] < want_med)  & (filtered_c26["not_want_pct"] <= nwant_med)]
     controversial = filtered_c26[(filtered_c26["want_pct"] >= want_med) & (filtered_c26["not_want_pct"] > nwant_med)]
 
+    # Calculate table height based on maximum companies in any quadrant (for consistent height across tabs)
+    max_companies_in_quadrant = max(len(leaders), len(anti_top), len(neutral), len(controversial))
+    table_height = min(398, 38 + max_companies_in_quadrant * 34)
+
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
         "Меньше всего известные",
         "Лидеры",
@@ -1175,7 +1179,7 @@ elif page == "Общий рейтинг":
                                        color=COLOR_UNKNOWN, title="Компании с наибольшей неизвестностью (%)", height=378, text_col="text")
             st.plotly_chart(fig, use_container_width=True)
 
-    def quadrant_table(df, label, color, title_color,sort_col="want_pct"):
+    def quadrant_table(df, label, color, title_color, sort_col="want_pct", fixed_height=None):
         st.markdown(
             f"### <span style='color:{title_color}'>{label}</span> — {len(df)} компаний",
             unsafe_allow_html=True
@@ -1220,7 +1224,9 @@ elif page == "Общий рейтинг":
         for col in pct_cols:
             if col in table_df.columns:
                 table_df[col] = table_df[col].apply(lambda x: f"{x*100:.1f}%")
-        render_quadrant_table(table_df, height=min(398, 38 + len(table_df) * 34))
+        # Use fixed height if provided, otherwise calculate dynamically
+        height_to_use = fixed_height if fixed_height is not None else min(398, 38 + len(table_df) * 34)
+        render_quadrant_table(table_df, height=height_to_use)
         chart_df = df.nlargest(12, sort_col).copy()
         chart_df["not_want_negative"] = -chart_df["not_want_pct"]
         chart_df = chart_df.sort_values(sort_col)
@@ -1263,16 +1269,16 @@ elif page == "Общий рейтинг":
         st.plotly_chart(fig, use_container_width=True)
 
     with tab2:
-        quadrant_table(leaders, "Лидеры", COLOR_WANT, COLOR_WANT)
+        quadrant_table(leaders, "Лидеры", COLOR_WANT, COLOR_WANT, fixed_height=table_height)
 
     with tab3:
-        quadrant_table(anti_top, "Анти-топ", COLOR_WANT, COLOR_NOT_WANT, sort_col="not_want_pct")
+        quadrant_table(anti_top, "Анти-топ", COLOR_WANT, COLOR_NOT_WANT, sort_col="not_want_pct", fixed_height=table_height)
 
     with tab4:
-        quadrant_table(neutral, "Нейтральные", COLOR_WANT, COLOR_UNKNOWN)
+        quadrant_table(neutral, "Нейтральные", COLOR_WANT, COLOR_UNKNOWN, fixed_height=table_height)
 
     with tab5:
-        quadrant_table(controversial, "Противоречивые", COLOR_WANT, COLOR_UNSURE)
+        quadrant_table(controversial, "Противоречивые", COLOR_WANT, COLOR_UNSURE, fixed_height=table_height)
 
     with tab6:
         st.markdown("### Топ пропущенных компаний по мнению респондентов")
